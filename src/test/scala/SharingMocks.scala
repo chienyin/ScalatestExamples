@@ -9,7 +9,6 @@ class SharingMocks1 extends AnyFlatSpec with MockFactory {
   mf.when(n).returning(expectRes)
 
   "function MyObj.fn_cb" should "just callback by the given para once." in {
-    MyObj.fn_cb(n, mf)
     val res = MyObj.fn_cb(n, mf)
     assert(res == expectRes)
   }

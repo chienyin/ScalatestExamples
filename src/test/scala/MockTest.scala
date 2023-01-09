@@ -46,6 +46,21 @@ class MockTest extends AnyFlatSpec with MockFactory {
     assert(res == expectRes)
   }
 
+  it should "call the lambda when using onCall." in {
+    // 不想寫死固定return值的話，可以用onCall傳一個lambda
+    val n = 123
+    val expectRes = "test 123"
+    val mo = mock[MyObj.MyTool]
+
+    (mo.proc _)
+    .expects(*)
+    .onCall{ p:Int => s"test $p" }
+
+    val res = MyObj.fn_obj(n, mo)
+
+    assert(res == expectRes)
+  }
+
   "function MyObj.fn_obj2" should "just return the stubed value of MyObj.a" in {
     // 這裡 mock member 的方式是直接當成無參數函式設定
     // 官方文件的做法compile不過
