@@ -20,11 +20,26 @@ class StubTest extends AnyFlatSpec with MockFactory {
     val expectRes = "test 123"
 
     val mo = stub[MyObj.MyTool]
-    (mo.proc _).when(n).returns(expectRes)
+    (mo.proc _).when(n).returning(expectRes)
 
     val res = MyObj.fn_obj(n, mo)
     assert(res == expectRes)
 
     (mo.proc _).verify(n).once
+  }
+
+  "function MyObj.fn_obj2" should "just return the stubed value of MyObj.a" in {
+    // 這裡 stub member 的方式是直接當成無參數函式設定
+    // 官方文件的做法compile不過
+
+    val n = 123
+    val expectRes = 123
+
+    val mo = stub[MyObj.MyTool]
+    // (() => mo.a).when(n) // 官方文件裡的寫法，不能編譯
+    (mo.a _).when().returning(n)
+
+    val res = MyObj.fn_obj2(mo)
+    assert(res == expectRes)
   }
 }

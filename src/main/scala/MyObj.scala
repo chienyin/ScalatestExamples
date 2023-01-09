@@ -1,6 +1,4 @@
 object MyObj {
-  val a = 10
-  
   def sq(x:Int) = {
     x * x
   }
@@ -13,8 +11,16 @@ object MyObj {
     callback(n)
   }
 
-  trait MyTool { def proc(s: Int): String }
+  trait MyTool { 
+    def proc(s: Int): String 
+    def a: Int
+  }
+
   def fn_obj(n: Int, mt: MyTool) = {
     mt.proc(n)
+  }
+
+  def fn_obj2(mt: MyTool) = {
+    mt.a
   }
 }

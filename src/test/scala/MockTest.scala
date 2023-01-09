@@ -45,4 +45,18 @@ class MockTest extends AnyFlatSpec with MockFactory {
 
     assert(res == expectRes)
   }
+
+  "function MyObj.fn_obj2" should "just return the stubed value of MyObj.a" in {
+    // 這裡 mock member 的方式是直接當成無參數函式設定
+    // 官方文件的做法compile不過
+    val n = 123
+    val expectRes = 123
+
+    val mo = mock[MyObj.MyTool]
+    // (() => mo.a).expects(n) // 官方文件裡的寫法，不能編譯
+    (mo.a _).expects().returns(n)
+
+    val res = MyObj.fn_obj2(mo)
+    assert(res == expectRes)
+  }
 }
